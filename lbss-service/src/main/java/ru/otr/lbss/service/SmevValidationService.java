@@ -36,12 +36,11 @@ public class SmevValidationService {
         if (ciss == null || ciss.getAny() == null) {
             throw new FailureWrapper("SMEV.SignatureVerificationFault");
         }
-
-
         SmevMember member = memberService.findMember(ciss.getAny());
         if (member == null) {
             throw new FailureWrapper("SMEV.SenderIsNotRegistered", "Хэш сертификата = " + memberService.getCertificateHash());
         }
+        log.info("checkCallerInformationSystemSignature debug");
         return member;
     }
 
