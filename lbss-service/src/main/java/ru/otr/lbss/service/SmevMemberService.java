@@ -47,9 +47,11 @@ public class SmevMemberService {
 	private CertificateHelper certificateHelper;
 	private MessageDigest messageDigest;
 
+	private String certificateHash = "";
+
 	@PostConstruct
 	private void init() {
-		log.info("init");
+		log.info("init SmevMemberService");
 		try {
 			protector = new SignatureProtector();
 			certificateHelper = new CertificateHelper();
@@ -73,7 +75,7 @@ public class SmevMemberService {
 
 	@PreDestroy
 	private void fina() {
-		log.info("fina");
+		log.info("final SmevMemberService");
 	}
 
 	private String md5(byte[] data) {
@@ -108,13 +110,17 @@ public class SmevMemberService {
 		try {
 			Document signature = protector.unpackSignature(packedSignature);
 			byte[] certificate = certificateHelper.findSingleCertificate(signature);
-			String certificateHash = md5(certificate);
+			certificateHash = md5(certificate);
 			log.info("findMember : certificateHash=" + certificateHash);
 			MongoCollection<SmevMember> collection = membersDB.getCollection(DocNames.SmevMember, SmevMember.class);
 			return collection.find(eq("CertificateHash", certificateHash)).first();
 		} catch (ExceptionWrapper e) {
 			throw new FailureWrapper("SMEV.SignatureVerificationFault");
 		}
+	}
+
+	public String getCertificateHash(){
+		return certificateHash;
 	}
 
 	public SmevMember findMember(MpcKey mpcKey) {

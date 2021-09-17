@@ -24,21 +24,23 @@ public class SmevValidationService {
     @Autowired
     @Qualifier("messagesDB")
     private MongoDatabase messagesDB;
-    //@Autowired
+    @Autowired
     private SmevMemberService memberService;
 
     @PostConstruct
     private void init() {
-        log.info("init");
+        log.info("init SmevValidationService");
     }
 
     public SmevMember checkCallerInformationSystemSignature(XMLDSigSignatureType ciss) throws FailureWrapper {
         if (ciss == null || ciss.getAny() == null) {
             throw new FailureWrapper("SMEV.SignatureVerificationFault");
         }
+
+
         SmevMember member = memberService.findMember(ciss.getAny());
         if (member == null) {
-            throw new FailureWrapper("SMEV.SenderIsNotRegistered");
+            throw new FailureWrapper("SMEV.SenderIsNotRegistered", "Хэш сертификата = " + memberService.getCertificateHash());
         }
         return member;
     }
