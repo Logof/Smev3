@@ -13,13 +13,11 @@ import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import javax.xml.datatype.XMLGregorianCalendar;
 
+
 /**
- * <p>
- * Java class for anonymous complex type.
+ * <p>Java class for anonymous complex type.
  * 
- * <p>
- * The following schema fragment specifies the expected content contained within
- * this class.
+ * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType>
@@ -34,59 +32,67 @@ import javax.xml.datatype.XMLGregorianCalendar;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = { "value" })
-@XmlRootElement(name = "Timestamp")
+@XmlType(name = "", propOrder = {
+    "value"
+})
+@XmlRootElement(name = "Timestamp", namespace = "urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.3")
 public class Timestamp {
 
-	@XmlValue
-	@XmlSchemaType(name = "dateTime")
-	protected XMLGregorianCalendar value;
-	@XmlAttribute(name = "Id")
-	@XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-	@XmlID
-	@XmlSchemaType(name = "ID")
-	protected String id;
+    @XmlValue
+    @XmlSchemaType(name = "dateTime")
+    protected XMLGregorianCalendar value;
+    @XmlAttribute(name = "Id")
+    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+    @XmlID
+    @XmlSchemaType(name = "ID")
+    protected String id;
 
-	/**
-	 * Gets the value of the value property.
-	 * 
-	 * @return possible object is {@link XMLGregorianCalendar }
-	 * 
-	 */
-	public XMLGregorianCalendar getValue() {
-		return value;
-	}
+    /**
+     * Gets the value of the value property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link XMLGregorianCalendar }
+     *     
+     */
+    public XMLGregorianCalendar getValue() {
+        return value;
+    }
 
-	/**
-	 * Sets the value of the value property.
-	 * 
-	 * @param value
-	 *            allowed object is {@link XMLGregorianCalendar }
-	 * 
-	 */
-	public void setValue(XMLGregorianCalendar value) {
-		this.value = value;
-	}
+    /**
+     * Sets the value of the value property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link XMLGregorianCalendar }
+     *     
+     */
+    public void setValue(XMLGregorianCalendar value) {
+        this.value = value;
+    }
 
-	/**
-	 * Gets the value of the id property.
-	 * 
-	 * @return possible object is {@link String }
-	 * 
-	 */
-	public String getId() {
-		return id;
-	}
+    /**
+     * Gets the value of the id property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getId() {
+        return id;
+    }
 
-	/**
-	 * Sets the value of the id property.
-	 * 
-	 * @param value
-	 *            allowed object is {@link String }
-	 * 
-	 */
-	public void setId(String value) {
-		this.id = value;
-	}
+    /**
+     * Sets the value of the id property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setId(String value) {
+        this.id = value;
+    }
 
 }

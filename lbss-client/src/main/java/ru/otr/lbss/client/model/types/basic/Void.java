@@ -6,15 +6,13 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
 
+
 /**
  * Тип элемента, который передаёт информацию фактом своего наличия.
  * 
- * <p>
- * Java class for Void complex type.
+ * <p>Java class for Void complex type.
  * 
- * <p>
- * The following schema fragment specifies the expected content contained within
- * this class.
+ * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="Void">
@@ -28,8 +26,11 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "Void")
-@XmlSeeAlso({ SmevFault.class })
+@XmlType(name = "Void", namespace = "urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.3")
+@XmlSeeAlso({
+    SmevFault.class
+})
 public class Void {
+
 
 }

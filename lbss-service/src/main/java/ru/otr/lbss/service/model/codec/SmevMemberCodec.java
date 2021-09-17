@@ -60,8 +60,9 @@ public class SmevMemberCodec implements CollectibleCodec<SmevMember> {
 
         List<Document> mpcRegistrationDocList = (List<Document>) doc.get("MpcRegistrationList");
         for (Document item : mpcRegistrationDocList) {
-        	result.getMpcRegistrationList().add(new MpcKey(item));
+            result.getMpcRegistrationList().add(new MpcKey(item));
         }
+
         return result;
     }
 

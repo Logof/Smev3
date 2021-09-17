@@ -25,8 +25,7 @@ import ru.otr.lbss.client.model.types.basic.Void;
 @WebService(name = "SMEVMessageExchangeService", targetNamespace = Namespaces.SERVICE)
 @HandlerChain(file = "/handler-chain.xml")
 @SOAPBinding(parameterStyle = SOAPBinding.ParameterStyle.BARE)
-@XmlSeeAlso({ ru.otr.lbss.client.model.types.ObjectFactory.class, ru.otr.lbss.client.model.types.fault.ObjectFactory.class,
-        ru.otr.lbss.client.model.types.basic.ObjectFactory.class })
+@XmlSeeAlso({ ru.otr.lbss.client.model.types.ObjectFactory.class })
 public class SMEVMessageExchange {
 	private static Logger log = LoggerFactory.getLogger(SMEVMessageExchange.class);
 
@@ -41,10 +40,9 @@ public class SMEVMessageExchange {
 	@WebResult(name = "SendRequestResponse", targetNamespace = Namespaces.TYPES, partName = "parameters")
 	public SendRequestResponse sendRequest(
 	        @WebParam(name = "SendRequestRequest", targetNamespace = Namespaces.TYPES, partName = "parameters") SendRequestRequest parameters)
-	        throws AccessDeniedException, AttachmentContentMiscoordinationException, AttachmentSizeLimitExceededException,
-	        BusinessDataTypeIsNotSupportedException, DestinationOverflowException, EndOfLifeException, InvalidContentException, InvalidMessageIdFormatException,
-	        MessageIsAlreadySentException, QuoteLimitExceededException, RecipientIsNotFoundException, SMEVFailureException, SenderIsNotRegisteredException,
-	        SignatureVerificationFaultException, StaleMessageIdException, TransactionCodeInvalidException {
+	        throws BusinessDataTypeIsNotSupportedException, InvalidContentException, InvalidMessageIdFormatException,
+	        MessageIsAlreadySentException,  SMEVFailureException, SenderIsNotRegisteredException,
+	        SignatureVerificationFaultException {
 		try {
 			return service.sendRequest(parameters);
 		} catch (FailureWrapper e) {
@@ -72,10 +70,10 @@ public class SMEVMessageExchange {
 	@WebResult(name = "SendResponseResponse", targetNamespace = Namespaces.TYPES, partName = "parameters")
 	public SendResponseResponse sendResponse(
 	        @WebParam(name = "SendResponseRequest", targetNamespace = Namespaces.TYPES, partName = "parameters") SendResponseRequest parameters)
-	        throws AttachmentContentMiscoordinationException, AttachmentSizeLimitExceededException, BusinessDataTypeIsNotSupportedException,
-	        DestinationOverflowException, IncorrectResponseContentTypeException, InvalidContentException, InvalidMessageIdFormatException,
-	        MessageIsAlreadySentException, QuoteLimitExceededException, RecipientIsNotFoundException, SMEVFailureException, SenderIsNotRegisteredException,
-	        SignatureVerificationFaultException, StaleMessageIdException {
+	        throws BusinessDataTypeIsNotSupportedException,
+	        IncorrectResponseContentTypeException, InvalidContentException, InvalidMessageIdFormatException,
+	        MessageIsAlreadySentException, RecipientIsNotFoundException, SMEVFailureException, SenderIsNotRegisteredException,
+	        SignatureVerificationFaultException {
 		try {
 
 			return service.sendResponse(parameters);
@@ -112,8 +110,7 @@ public class SMEVMessageExchange {
 	@WebResult(name = "GetRequestResponse", targetNamespace = Namespaces.TYPES, partName = "parameters")
 	public GetRequestResponse getRequest(
 	        @WebParam(name = "GetRequestRequest", targetNamespace = Namespaces.TYPES, partName = "parameters") GetRequestRequest parameters)
-	        throws InvalidContentException, SMEVFailureException, SenderIsNotRegisteredException, SignatureVerificationFaultException,
-	        UnknownMessageTypeException {
+	        throws SMEVFailureException, SenderIsNotRegisteredException, SignatureVerificationFaultException {
 		try {
 
 			return service.getRequest(parameters);
@@ -136,8 +133,7 @@ public class SMEVMessageExchange {
 	@WebResult(name = "GetStatusResponse", targetNamespace = Namespaces.TYPES, partName = "parameters")
 	public GetStatusResponse getStatus(
 	        @WebParam(name = "GetStatusRequest", targetNamespace = Namespaces.TYPES, partName = "parameters") GetStatusRequest parameters)
-	        throws InvalidContentException, SMEVFailureException, SenderIsNotRegisteredException, SignatureVerificationFaultException,
-	        UnknownMessageTypeException {
+	        throws SMEVFailureException, SenderIsNotRegisteredException, SignatureVerificationFaultException {
 		try {
 			return service.getStatus(parameters);
 		} catch (FailureWrapper e) {
@@ -157,8 +153,7 @@ public class SMEVMessageExchange {
 	@WebResult(name = "GetResponseResponse", targetNamespace = Namespaces.TYPES, partName = "parameters")
 	public GetResponseResponse getResponse(
 	        @WebParam(name = "GetResponseRequest", targetNamespace = Namespaces.TYPES, partName = "parameters") GetResponseRequest parameters)
-	        throws InvalidContentException, SMEVFailureException, SenderIsNotRegisteredException, SignatureVerificationFaultException,
-	        UnknownMessageTypeException {
+	        throws SMEVFailureException, SenderIsNotRegisteredException, SignatureVerificationFaultException {
 		try {
 			return service.getResponse(parameters);
 		} catch (FailureWrapper e) {
@@ -179,8 +174,7 @@ public class SMEVMessageExchange {
 	@WebMethod(operationName = "Ack", action = "urn:Ack")
 	@WebResult(name = "AckResponse", targetNamespace = Namespaces.TYPES, partName = "parameters")
 	public Void ack(@WebParam(name = "AckRequest", targetNamespace = Namespaces.TYPES, partName = "parameters") AckRequest parameters)
-	        throws InvalidContentException, SMEVFailureException, SenderIsNotRegisteredException, SignatureVerificationFaultException,
-	        TargetMessageIsNotFoundException {
+	        throws SMEVFailureException, SignatureVerificationFaultException, TargetMessageIsNotFoundException {
 		try {
 			return service.ack(parameters);
 		} catch (FailureWrapper e) {
@@ -189,26 +183,6 @@ public class SMEVMessageExchange {
 				throw new SignatureVerificationFaultException(e.getMessage(), null);
 			case "SMEV.TargetMessageIsNotFound":
 				throw new TargetMessageIsNotFoundException(e.getMessage(), null);
-			default:
-				log.error(e.toString(), e);
-				throw new SMEVFailureException(e.getMessage(), new Void());
-			}
-		}
-	}
-
-	@WebMethod(operationName = "GetIncomingQueueStatistics", action = "urn:GetIncomingQueueStatistics")
-	@WebResult(name = "GetIncomingQueueStatisticsResponse", targetNamespace = Namespaces.TYPES, partName = "parameters")
-	public GetIncomingQueueStatisticsResponse getIncomingQueueStatistics(
-	        @WebParam(name = "GetIncomingQueueStatisticsRequest", targetNamespace = Namespaces.TYPES, partName = "parameters") GetIncomingQueueStatisticsRequest parameters)
-	        throws InvalidContentException, SMEVFailureException, SenderIsNotRegisteredException, SignatureVerificationFaultException {
-		try {
-			return service.getIncomingQueueStatistics(parameters);
-		} catch (FailureWrapper e) {
-			switch (e.getCode()) {
-			case "SMEV.SignatureVerificationFault":
-				throw new SignatureVerificationFaultException(e.getMessage(), null);
-			case "SMEV.SenderIsNotRegistered":
-				throw new SenderIsNotRegisteredException(e.getMessage(), null);
 			default:
 				log.error(e.toString(), e);
 				throw new SMEVFailureException(e.getMessage(), new Void());

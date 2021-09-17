@@ -33,7 +33,6 @@ import ru.otr.lbss.client.api.SmevPrimeServiceLocal;
 import ru.otr.lbss.client.api.SmevPrimeServiceLocal.Mode;
 import ru.otr.lbss.client.model.types.AsyncProcessingStatus;
 import ru.otr.lbss.client.model.types.AsyncProcessingStatusData;
-import ru.otr.lbss.client.model.types.GetIncomingQueueStatisticsRequest;
 import ru.otr.lbss.client.model.types.GetRequestRequest;
 import ru.otr.lbss.client.model.types.GetResponseRequest;
 import ru.otr.lbss.client.model.types.GetStatusRequest;
@@ -46,12 +45,9 @@ import ru.otr.lbss.client.model.types.SendResponseRequest;
 import ru.otr.lbss.client.model.types.SenderProvidedRequestData;
 import ru.otr.lbss.client.model.types.SenderProvidedResponseData;
 import ru.otr.lbss.client.model.types.SmevAsyncProcessingMessage;
-import ru.otr.lbss.client.model.types.GetIncomingQueueStatisticsResponse.QueueStatistics;
 import ru.otr.lbss.client.model.types.GetRequestResponse.RequestMessage;
 import ru.otr.lbss.client.model.types.GetResponseResponse.ResponseMessage;
-import ru.otr.lbss.client.model.types.MessageMetadata.SupplementaryData;
 import ru.otr.lbss.client.model.types.basic.InteractionStatusType;
-import ru.otr.lbss.client.model.types.basic.InteractionTypeType;
 import ru.otr.lbss.client.model.types.basic.MessagePrimaryContent;
 import ru.otr.lbss.service.config.ServiceProperties;
 import ru.otr.lbss.service.config.ModeService;
@@ -117,7 +113,7 @@ public class SmevProcessingService {
 		metadata.setId("ID_" + UUID.randomUUID());
 		metadata.setMessageId(msgId.trim().toLowerCase());
 		metadata.setSendingTimestamp(datatypeFactory.newXMLGregorianCalendar(new GregorianCalendar()));
-		metadata.setDestinationName("TODO DestinationName");
+		//metadata.setDestinationName("TODO DestinationName");
 		routingData.setMessageMetadata(metadata);
 	}
 
@@ -139,9 +135,9 @@ public class SmevProcessingService {
 	private void processSupplementaryData(RoutingData routingData, SmevMember sender, SmevMember recipient) throws FailureWrapper {
 		routingData.getMessageMetadata().setSender(sender.toSender());
 		routingData.getMessageMetadata().setRecipient(recipient.toRecipient());
-		routingData.getMessageMetadata().setSupplementaryData(new SupplementaryData());
-		routingData.getMessageMetadata().getSupplementaryData().setInteractionType(InteractionTypeType.NOT_DETECTED);
-		if (sender.getType() == SmevMember.Type.PGU) {
+		//routingData.getMessageMetadata().setSupplementaryData(new SupplementaryData());
+		//routingData.getMessageMetadata().getSupplementaryData().setInteractionType(InteractionTypeType.NOT_DETECTED);
+		/*if (sender.getType() == SmevMember.Type.PGU) {
 			if (recipient.getType() == SmevMember.Type.OIV) {
 				routingData.getMessageMetadata().getSupplementaryData().setInteractionType(InteractionTypeType.PGU_2_OIV);
 			}
@@ -159,6 +155,7 @@ public class SmevProcessingService {
 			}
 		}
 		routingData.getMessageMetadata().getSupplementaryData().setDetectedContentTypeName("TODO SupplementaryData.DetectedContentTypeName");
+		*/
 	}
 
 	public RequestRoutingData makeRoutingData(SendRequestRequest request, SmevMember sender) throws FailureWrapper {
@@ -322,9 +319,9 @@ public class SmevProcessingService {
 		metadata.setSender(ModelConstants.SMEV_AS_MEMBER.toSender());
 		metadata.setSendingTimestamp(datatypeFactory.newXMLGregorianCalendar(new GregorianCalendar()));
 		metadata.setRecipient(routingData.getMessageMetadata().getSender().toRecipient());
-		metadata.setSupplementaryData(new SupplementaryData());
-		metadata.getSupplementaryData().setInteractionType(InteractionTypeType.OTHER);
-		metadata.setDestinationName("TODO DestinationName");
+		//metadata.setSupplementaryData(new SupplementaryData());
+		//metadata.getSupplementaryData().setInteractionType(InteractionTypeType.OTHER);
+		//metadata.setDestinationName("TODO DestinationName");
 		metadata.setStatus(InteractionStatusType.RESPONSE_IS_ACCEPTED_BY_SMEV);
 		response.setMessageMetadata(metadata);
 
@@ -462,7 +459,7 @@ public class SmevProcessingService {
 				ftpService.archive(responseMessage.getResponse().getFSAttachmentsList());
 			}
 			responseMessage.getResponse().getMessageMetadata().setDeliveryTimestamp(datatypeFactory.newXMLGregorianCalendar(new GregorianCalendar()));
-			responseMessage.getResponse().getMessageMetadata().setStatus(InteractionStatusType.RESPONSE_IS_DELIVERED);
+			responseMessage.getResponse().getMessageMetadata().setStatus(InteractionStatusType.MESSAGE_IS_DELIVERED); //.RESPONSE_IS_DELIVERED
 			signService.signSMEVSignature(responseMessage);
 			collection.insertOne(responseMessage);
 			log.info(sender.getMnemonic() + " : ack : MessageID = " + messageID + " -> Response, OK");
@@ -527,9 +524,4 @@ public class SmevProcessingService {
 		return statusMessage;
 	}
 
-	public List<QueueStatistics> getIncomingQueueStatistics(GetIncomingQueueStatisticsRequest request, SmevMember sender) {
-		List<QueueStatistics> result = new ArrayList<>();
-		// TODO
-		return result;
-	}
 }

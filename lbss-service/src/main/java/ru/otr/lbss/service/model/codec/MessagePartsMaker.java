@@ -32,7 +32,6 @@ import ru.otr.lbss.client.model.types.basic.AttachmentHeaderType;
 import ru.otr.lbss.client.model.types.basic.FSAttachmentsList;
 import ru.otr.lbss.client.model.types.basic.FSAuthInfo;
 import ru.otr.lbss.client.model.types.basic.InteractionStatusType;
-import ru.otr.lbss.client.model.types.basic.InteractionTypeType;
 import ru.otr.lbss.client.model.types.basic.MessagePrimaryContent;
 import ru.otr.lbss.client.model.types.basic.RefAttachmentHeaderList;
 import ru.otr.lbss.client.model.types.basic.RefAttachmentHeaderType;
@@ -234,7 +233,7 @@ public class MessagePartsMaker {
         GregorianCalendar sendingTimestamp = new GregorianCalendar();
         sendingTimestamp.setTime(doc.getDate("SendingTimestamp"));
         result.setSendingTimestamp(datatypeFactory.newXMLGregorianCalendar(sendingTimestamp));
-        result.setDestinationName(doc.getString("DestinationName"));
+        //result.setDestinationName(doc.getString("DestinationName"));
 
         if (doc.get("Recipient") != null) {
             Document recipientDoc = (Document) doc.get("Recipient");
@@ -243,13 +242,13 @@ public class MessagePartsMaker {
             result.getRecipient().setHumanReadableName(recipientDoc.getString("HumanReadableName"));
         }
 
-        Document supplementaryDataDoc = (Document) doc.get("SupplementaryData");
+        /*Document supplementaryDataDoc = (Document) doc.get("SupplementaryData");
         result.setSupplementaryData(new MessageMetadata.SupplementaryData());
         if (supplementaryDataDoc.get("DetectedContentTypeName") != null) {
             result.getSupplementaryData().setDetectedContentTypeName(supplementaryDataDoc.getString("DetectedContentTypeName"));
         }
         result.getSupplementaryData().setInteractionType(InteractionTypeType.valueOf(supplementaryDataDoc.getString("InteractionType")));
-
+        */
         if (doc.get("DeliveryTimestamp") != null) {
             GregorianCalendar deliveryTimestamp = new GregorianCalendar();
             sendingTimestamp.setTime(doc.getDate("DeliveryTimestamp"));

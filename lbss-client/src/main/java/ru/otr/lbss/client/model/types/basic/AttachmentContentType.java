@@ -12,18 +12,16 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
+
 /**
  * 
- * Содержимое вложенного файла. Значение атрибута attachmentId должно быть
- * уникально среди всех элементов и атрибутов СМЭВ-сообщения, имеющих тип xs:ID.
+ *                 Содержимое вложенного файла.
+ *                 Значение атрибута attachmentId должно быть уникально среди всех элементов и атрибутов СМЭВ-сообщения, имеющих тип xs:ID.
+ *             
  * 
+ * <p>Java class for AttachmentContentType complex type.
  * 
- * <p>
- * Java class for AttachmentContentType complex type.
- * 
- * <p>
- * The following schema fragment specifies the expected content contained within
- * this class.
+ * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="AttachmentContentType">
@@ -41,58 +39,67 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "AttachmentContentType", propOrder = { "id", "content" })
+@XmlType(name = "AttachmentContentType", namespace = "urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.3", propOrder = {
+    "id",
+    "content"
+})
 public class AttachmentContentType {
 
-	@XmlElement(name = "Id", required = true)
-	@XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-	@XmlID
-	@XmlSchemaType(name = "ID")
-	protected String id;
-	@XmlElement(name = "Content", required = true)
-	@XmlMimeType("application/octet-stream")
-	protected DataHandler content;
+    @XmlElement(name = "Id", required = true)
+    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+    @XmlID
+    @XmlSchemaType(name = "ID")
+    protected String id;
+    @XmlElement(name = "Content", required = true)
+    @XmlMimeType("application/octet-stream")
+    protected DataHandler content;
 
-	/**
-	 * Gets the value of the id property.
-	 * 
-	 * @return possible object is {@link String }
-	 * 
-	 */
-	public String getId() {
-		return id;
-	}
+    /**
+     * Gets the value of the id property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getId() {
+        return id;
+    }
 
-	/**
-	 * Sets the value of the id property.
-	 * 
-	 * @param value
-	 *            allowed object is {@link String }
-	 * 
-	 */
-	public void setId(String value) {
-		this.id = value;
-	}
+    /**
+     * Sets the value of the id property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setId(String value) {
+        this.id = value;
+    }
 
-	/**
-	 * Gets the value of the content property.
-	 * 
-	 * @return possible object is {@link DataHandler }
-	 * 
-	 */
-	public DataHandler getContent() {
-		return content;
-	}
+    /**
+     * Gets the value of the content property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link DataHandler }
+     *     
+     */
+    public DataHandler getContent() {
+        return content;
+    }
 
-	/**
-	 * Sets the value of the content property.
-	 * 
-	 * @param value
-	 *            allowed object is {@link DataHandler }
-	 * 
-	 */
-	public void setContent(DataHandler value) {
-		this.content = value;
-	}
+    /**
+     * Sets the value of the content property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link DataHandler }
+     *     
+     */
+    public void setContent(DataHandler value) {
+        this.content = value;
+    }
 
 }

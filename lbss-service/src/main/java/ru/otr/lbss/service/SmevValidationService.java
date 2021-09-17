@@ -24,13 +24,12 @@ public class SmevValidationService {
     @Autowired
     @Qualifier("messagesDB")
     private MongoDatabase messagesDB;
-    @Autowired
+    //@Autowired
     private SmevMemberService memberService;
 
     @PostConstruct
     private void init() {
         log.info("init");
-
     }
 
     public SmevMember checkCallerInformationSystemSignature(XMLDSigSignatureType ciss) throws FailureWrapper {
