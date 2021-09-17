@@ -1,10 +1,8 @@
 
 package ru.otr.lbss.client.model.types.basic;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAnyElement;
-import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.*;
+
 import org.w3c.dom.Element;
 
 
@@ -35,6 +33,7 @@ import org.w3c.dom.Element;
 @XmlType(name = "XMLDSigSignatureType", namespace = "urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.3", propOrder = {
     "any"
 })
+@XmlRootElement
 public class XMLDSigSignatureType {
 
     @XmlAnyElement(lax = true)

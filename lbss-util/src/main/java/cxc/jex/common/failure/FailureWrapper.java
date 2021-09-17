@@ -36,7 +36,6 @@ public class FailureWrapper extends Exception {
 
 	public FailureWrapper(String code, Object... parameters) {
 		super("[" + PROMPT + ":" + code + "] " + String.format(msgHelper.findMessage(code), parameters));
-		System.out.print("[" + PROMPT + ":" + code + "] " + String.format(msgHelper.findMessage(code), parameters));
 		this.code = code;
 		this.parameters = parameters;
 	}

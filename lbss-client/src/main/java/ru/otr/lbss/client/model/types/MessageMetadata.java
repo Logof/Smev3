@@ -78,7 +78,7 @@ import java.io.Serializable;
     "status"
 })
 @XmlRootElement(name = "MessageMetadata")
-public class MessageMetadata {
+public class MessageMetadata implements Serializable{
 
     @XmlElement(name = "MessageId")
     protected String messageId;
