@@ -11,3 +11,8 @@ log/
 .idea/
 *.iml
 *.iws
+
+deploy.sh
+deploy.sh~
+deploy.zip
+deploy/
