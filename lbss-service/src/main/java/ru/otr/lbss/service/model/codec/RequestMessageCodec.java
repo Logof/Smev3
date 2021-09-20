@@ -15,12 +15,16 @@ import org.bson.codecs.EncoderContext;
 
 import cxc.jex.common.exception.ExceptionWrapper;
 import cxc.jex.common.xml.transform.JAXBTransformer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ru.otr.lbss.client.model.types.Request;
 import ru.otr.lbss.client.model.types.GetRequestResponse.RequestMessage;
 import ru.otr.lbss.client.model.types.basic.XMLDSigSignatureType;
+import ru.otr.lbss.service.SmevProcessingService;
 import ru.otr.lbss.service.model.FieldNames;
 
 public class RequestMessageCodec implements CollectibleCodec<RequestMessage> {
+	private static Logger log = LoggerFactory.getLogger(RequestMessageCodec.class);
 
 	private Codec<Document> documentCodec;
 	private DocumentPartsMaker docPartsMaker;
@@ -46,11 +50,20 @@ public class RequestMessageCodec implements CollectibleCodec<RequestMessage> {
 			}
 			request.append("ReplyTo", src.getRequest().getReplyTo());
 			if (src.getRequest().getSenderInformationSystemSignature() != null) {
-				request.append("SenderInformationSystemSignature", transformer.obj2xml(src.getRequest().getSenderInformationSystemSignature()));
+				//TODO: Надо разобраться почему попадаем сюда, если тэг отсутствует
+				//request.append("SenderInformationSystemSignature", transformer.obj2xml(src.getRequest().getSenderInformationSystemSignature()));
+
+				XMLDSigSignatureType senderSignatyre = src.getRequest().getSenderInformationSystemSignature();
+				if (senderSignatyre != null) {
+					try {
+						request.append("SenderInformationSystemSignature", transformer.obj2xml(senderSignatyre));
+						log.info(transformer.obj2xml(senderSignatyre));
+					} catch (Exception e) {
+						log.info("transformer.obj2xml senderSignatyre");
+					}
+				}
 			}
-
 			Document result = new Document();
-
 			result.append("Request", request);
 			if (src.getAttachmentContentList() != null) {
 				result.append("AttachmentContentList", docPartsMaker
@@ -59,12 +72,10 @@ public class RequestMessageCodec implements CollectibleCodec<RequestMessage> {
 			if (src.getSMEVSignature() != null) {
 				result.append("SMEVSignature", transformer.obj2xml(src.getSMEVSignature()));
 			}
-
 			result.append(FieldNames.docId, src.getDocId().toString());
 			result.append(FieldNames.mpcNamespace, src.getMpcNamespace());
 			result.append(FieldNames.mpcRootElement, src.getMpcRootElement());
 			result.append(FieldNames.acknowledgmentTimestamp, src.getAcknowledgmentTimestamp());
-
 			documentCodec.encode(writer, result, encoderContext);
 		} catch (ExceptionWrapper e) {
 			throw new RuntimeException(e);

@@ -28,8 +28,7 @@ import ru.otr.lbss.client.model.types.basic.Void;
 @WebService(name = "SMEVMessageExchangeService", targetNamespace = Namespaces.SERVICE)
 @HandlerChain(file = "/handler-chain.xml")
 @SOAPBinding(parameterStyle = SOAPBinding.ParameterStyle.BARE)
-@XmlSeeAlso({ ru.otr.lbss.client.model.types.ObjectFactory.class, ru.otr.lbss.client.model.types.fault.ObjectFactory.class,
-        ru.otr.lbss.client.model.types.basic.ObjectFactory.class })
+@XmlSeeAlso({ ru.otr.lbss.client.model.types.ObjectFactory.class })
 public class SMEVMessageExchange {
 	private static Logger log = LoggerFactory.getLogger(SMEVMessageExchange.class);
 

@@ -488,7 +488,7 @@ public class SmevProcessingService {
 				ftpService.archive(responseMessage.getResponse().getFSAttachmentsList());
 			}
 			responseMessage.getResponse().getMessageMetadata().setDeliveryTimestamp(datatypeFactory.newXMLGregorianCalendar(new GregorianCalendar()));
-			responseMessage.getResponse().getMessageMetadata().setStatus(InteractionStatusType.RESPONSE_IS_DELIVERED);
+			responseMessage.getResponse().getMessageMetadata().setStatus(InteractionStatusType.MESSAGE_IS_DELIVERED);//.RESPONSE_IS_DELIVERED);
 			signService.signSMEVSignature(responseMessage);
 			collection.insertOne(responseMessage);
 			log.info(sender.getMnemonic() + " : ack : MessageID = " + messageID + " -> Response, OK");
