@@ -13,6 +13,7 @@ import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import java.security.PublicKey;
 
 
 /**
@@ -65,6 +66,11 @@ public class Request {
     @XmlID
     @XmlSchemaType(name = "ID")
     protected String id;
+
+
+    public XMLDSigSignatureType getCallerInformationSystemSignature(){
+        return senderInformationSystemSignature;
+    }
 
     /**
      * Gets the value of the senderProvidedRequestData property.

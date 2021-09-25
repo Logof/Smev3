@@ -265,8 +265,8 @@ public class SmevProcessingService {
 					request.setMessageMetadata(routingData.getMessageMetadata());
 					request.getMessageMetadata().setStatus(InteractionStatusType.REQUEST_IS_ACCEPTED_BY_SMEV);
 					request.setReplyTo(routingData.getReplyTo());
-					request.setSenderInformationSystemSignature(src.getCallerInformationSystemSignature());
 
+					request.setSenderInformationSystemSignature(src.getCallerInformationSystemSignature());
 					RequestMessage requestMessage = new RequestMessage();
 					requestMessage.setRequest(request);
 					requestMessage.setAttachmentContentList(src.getAttachmentContentList());

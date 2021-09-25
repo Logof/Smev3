@@ -40,6 +40,9 @@ public class RequestMessageCodec implements CollectibleCodec<RequestMessage> {
 
 	@Override
 	public void encode(BsonWriter writer, RequestMessage src, EncoderContext encoderContext) {
+		Request requestXML = src.getRequest();
+		log.info("");
+
 		try {
 			Document request = new Document();
 			request.append("Id", src.getRequest().getId());
@@ -50,18 +53,7 @@ public class RequestMessageCodec implements CollectibleCodec<RequestMessage> {
 			}
 			request.append("ReplyTo", src.getRequest().getReplyTo());
 			if (src.getRequest().getSenderInformationSystemSignature() != null) {
-				//TODO: Надо разобраться почему попадаем сюда, если тэг отсутствует
-				//request.append("SenderInformationSystemSignature", transformer.obj2xml(src.getRequest().getSenderInformationSystemSignature()));
-
-				XMLDSigSignatureType senderSignatyre = src.getRequest().getSenderInformationSystemSignature();
-				if (senderSignatyre != null) {
-					try {
-						request.append("SenderInformationSystemSignature", transformer.obj2xml(senderSignatyre));
-						log.info(transformer.obj2xml(senderSignatyre));
-					} catch (Exception e) {
-						log.info("transformer.obj2xml senderSignatyre");
-					}
-				}
+				request.append("SenderInformationSystemSignature", transformer.obj2xml(src.getRequest().getSenderInformationSystemSignature()));
 			}
 			Document result = new Document();
 			result.append("Request", request);

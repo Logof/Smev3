@@ -7,8 +7,12 @@ import javax.xml.bind.*;
 import javax.xml.transform.TransformerFactoryConfigurationError;
 
 import cxc.jex.common.exception.ExceptionWrapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class JAXBTransformer extends GeneralTransformer {
+	private static Logger log = LoggerFactory.getLogger(JAXBTransformer.class);
+
 	private static final String PROPERTY_xml_bind_xmlDeclaration = "com.sun.xml.bind.xmlDeclaration";
 
 	private JAXBContext jaxbContext;
@@ -27,6 +31,7 @@ public class JAXBTransformer extends GeneralTransformer {
 	}
 
 	public String obj2xml(Object jaxbElement) throws ExceptionWrapper {
+		log.info("jaxbElement is " + (jaxbElement == null ? "": "not ") + "null");
 		if (jaxbElement == null) {
 			throw new ExceptionWrapper("InvalidEmptyValue");
 		}
@@ -37,6 +42,7 @@ public class JAXBTransformer extends GeneralTransformer {
 			marshaller.marshal(jaxbElement, sw);
 			return sw.toString();
 		} catch (JAXBException e) {
+			e.printStackTrace();
 			throw new ExceptionWrapper(e);
 		}
 
