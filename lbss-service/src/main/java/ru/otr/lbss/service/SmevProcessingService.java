@@ -169,7 +169,8 @@ public class SmevProcessingService {
 
 		result.getMessageMetadata().setMessageType(MessageTypeType.REQUEST);
 		processMessagePrimaryContent(result, request.getSenderProvidedRequestData().getMessagePrimaryContent());
-		SmevMember recipient = memberService.findMember(result.getMpcKey());
+		//SmevMember recipient = memberService.findMember(result.getMpcKey());
+		SmevMember recipient = memberService.findMember(result.getMpcKey(), sender);
 		if (recipient == null) {
 			throw new FailureWrapper("SMEV.BusinessDataTypeIsNotSupported.Unregistered");
 		}
@@ -186,7 +187,7 @@ public class SmevProcessingService {
 		if (request.getSenderProvidedResponseData().getMessagePrimaryContent() != null) {
 			result.setKind(ResponseKind.MessagePrimaryContent);
 			processMessagePrimaryContent(result, request.getSenderProvidedResponseData().getMessagePrimaryContent());
-			SmevMember owner = memberService.findMember(result.getMpcKey());
+			SmevMember owner = memberService.findMember(result.getMpcKey(), null);
 			if (owner == null) {
 				throw new FailureWrapper("SMEV.BusinessDataTypeIsNotSupported.Unregistered");
 			}

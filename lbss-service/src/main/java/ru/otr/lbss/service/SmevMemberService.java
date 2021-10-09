@@ -117,7 +117,7 @@ public class SmevMemberService {
 		}
 	}
 
-	public SmevMember findMember(MpcKey mpcKey) {
+	/*public SmevMember findMember(MpcKey mpcKey) {
 		if (modeService.getMemberServiceMode() == Mode.STUB) {
 			return findMember("STUB");
 		}
@@ -125,7 +125,27 @@ public class SmevMemberService {
 		MongoCollection<SmevMember> collection = membersDB.getCollection(DocNames.SmevMember, SmevMember.class);
 		org.bson.Document fields = new org.bson.Document("$elemMatch", mpcKey.toDocument());
 		org.bson.Document filter = new org.bson.Document("MpcRegistrationList", fields);
+
 		return collection.find(filter).first();
+	}*/
+
+	public SmevMember findMember(MpcKey mpcKey, SmevMember sender) {
+		if (modeService.getMemberServiceMode() == Mode.STUB) {
+			return findMember("STUB");
+		}
+		log.info("findMember : " + mpcKey);
+		MongoCollection<SmevMember> collection = membersDB.getCollection(DocNames.SmevMember, SmevMember.class);
+		org.bson.Document fields = new org.bson.Document("$elemMatch", mpcKey.toDocument());
+		org.bson.Document filter = new org.bson.Document("MpcRegistrationList", fields);
+		log.info(filter.getString(filter));
+
+		for (SmevMember result : collection.find(filter)) {
+			if (!result.equals(sender)) {
+				return result;
+			}
+		}
+		return null;
+		//return collection.find(filter).first();
 	}
 
 }
